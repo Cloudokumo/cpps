@@ -1,8 +1,7 @@
 #ifndef PHONEBOOK_H
 # define PHONEBOOK_H
 
-#include <string>
-#include <iostream>
+#include "Contact.hpp"
 
 class Phonebook{
 public:    
@@ -13,6 +12,7 @@ public:
     void   display_contact(Phonebook);
 private:
 
-    contact _contact[8];
+    Contact _contact[8];
 };
 
+#endif
