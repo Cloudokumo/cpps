@@ -5,16 +5,16 @@ Phonebook::Phonebook(void){
     return;
 }
 
-Phonebook::~Phonebook(void){
-    return;
+Phonebook::~Phonebook(void)
+{
 }
 
 
-Phonebook Phonebook::set_contact(void){
-    contact new_contact(set_info("First name:"), set_info("Last name:"),
-    set_info("Nickname:"),set_info("Phone number:"),
-    set_info("Darkest secret:"));
+int Phonebook::set_contact(){
+    Contact new_contact;
 
-    pb._contacts[i] = new_contact;
-    i++;
+    new_contact.set_info();
+
+
+    this->_contact = new_contact;
 }

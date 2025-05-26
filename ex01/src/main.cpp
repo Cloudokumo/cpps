@@ -1,6 +1,8 @@
-#include "PhoneBook.hpp"
+#include "Contact.hpp"
+#include "Phonebook.hpp"
 
-int main(){
+int main()
+{
     std::string cmd;
     Phonebook pb;
 
