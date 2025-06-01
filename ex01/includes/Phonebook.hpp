@@ -1,17 +1,18 @@
-#ifndef PHONEBOOK_H
-# define PHONEBOOK_H
+#pragma once
 
 #include "Contact.hpp"
 
-class Phonebook{
-    public:    
+class Phonebook {
+    public:
         Phonebook(void);
         ~Phonebook(void);
-        
-        int     set_contact();
-        void     display_contact();
+    
+        void add_contact(void);
+        void search_contacts(void);
+    
     private:
-        Contact _contact[8];
+        Contact _contacts[8];
+        int _contact_count;
+        int _next_index;
 };
 
-#endif
