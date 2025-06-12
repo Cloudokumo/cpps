@@ -1,4 +1,4 @@
-NAME			=	Humans
+NAME			=	files
 CC				=	c++
 CFLAGS			=	-Wall -Wextra -Werror -std=c++98
 
@@ -7,10 +7,6 @@ OBJDIR  = obj
 
 
 SRCS     		= main.cpp\
-					srcs/HumanA.cpp\
-					srcs/HumanB.cpp\
-					srcs/Weapon.cpp\
-
 
 OBJS    = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
