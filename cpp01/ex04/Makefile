@@ -24,7 +24,7 @@ $(OBJDIR):
 all			:	$(NAME)
 
 clean		:
-		@rm -rf $(OBJ_DIR)
+		@rm -rf $(OBJDIR)
 
 fclean		:	clean
 		@rm -rf $(NAME)
