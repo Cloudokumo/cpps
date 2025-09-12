@@ -3,6 +3,7 @@
 #include <iostream>
 
 class ICharacter;
+
 class AMateria
 {
 protected:
