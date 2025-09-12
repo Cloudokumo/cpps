@@ -50,9 +50,8 @@ void MateriaSource::learnMateria(AMateria* materia)
             return;
         }
     }
-    // Si on arrive ici, c'est que le tableau est plein
     std::cout << "MateriaSource is full, cannot learn more materia." << std::endl;
-    delete materia; // On supprime la materia non apprise pour éviter une fuite mémoire
+    delete materia;
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type)

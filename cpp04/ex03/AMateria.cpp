@@ -1,8 +1,13 @@
 #include "AMateria.hpp"
+#include "ICharacter.hpp"   
 
 AMateria::AMateria() : _type("default")
 {
     // std::cout << "AMateria default constructor called" << std::endl;
+}
+AMateria::AMateria(std::string const & type) : _type(type)
+{
+    // std::cout << "AMateria constructor called" << std::endl;
 }
 
 AMateria::AMateria(const AMateria& other) : _type(other._type)
