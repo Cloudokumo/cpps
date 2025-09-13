@@ -5,6 +5,7 @@
 #include "Elements.hpp"
 
 
+
 int main()
 {
     IMateriaSource* src = new MateriaSource();
@@ -16,6 +17,11 @@ int main()
     AMateria* tmp;
     tmp = src->createMateria("ice");
     me->equip(tmp);
+    me->unequip(0);
+    me->equip(tmp);
+    me->unequip(0);
+
+
     tmp = src->createMateria("cure");
     me->equip(tmp);
     me->equip(tmp);
@@ -23,6 +29,7 @@ int main()
 
     me->use(0, *bob);
     me->use(1, *bob);
+
 
     delete bob;
     delete me;

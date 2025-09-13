@@ -6,8 +6,6 @@ class Character : public ICharacter
 private:
     std::string _name;
     AMateria* _inventory[4];
-    static AMateria* _floor[100]; // Pour stocker les materia non équipées
-    static int _floorCount;
 
 public:
     Character();
@@ -21,5 +19,6 @@ public:
     virtual void unequip(int idx);
     virtual void use(int idx, ICharacter& target);
 
-    static void clearFloor();
+    int _floorCount;
+    AMateria* _floor[100];
 };
