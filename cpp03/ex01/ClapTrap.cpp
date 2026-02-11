@@ -8,6 +8,11 @@ ClapTrap::ClapTrap(std::string Name) : _name(Name), _hitPoints(10), _energyPoint
     std::cout << "Constructor ClapTrap has been called " << std::endl;
 }
 
+ClapTrap::ClapTrap(const ClapTrap &other){
+    std::cout << "Copy constructor ClapTrap has been called " << std::endl;
+    *this = other;
+}
+
 ClapTrap::~ClapTrap() {
     std::cout << "Destructor ClapTrap has been called " << std::endl;
 }

@@ -12,6 +12,12 @@ ClapTrap::~ClapTrap() {
     std::cout << "Destructor ClapTrap has been called " << std::endl;
 }
 
+ClapTrap::ClapTrap(const ClapTrap &other){
+    std::cout << "Copy constructor ClapTrap has been called " << std::endl;
+    *this = other;
+}
+
+
 void ClapTrap::attack(const std::string& target) {
     if (this->_hitPoints <= 0 || this->_energyPoints <= 0) {
         std::cout << "ClapTrap " << this->_name << " cannot attack because it has no hit points or energy points left." << std::endl;

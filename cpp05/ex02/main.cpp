@@ -18,6 +18,7 @@ int main()
         std::cout << "\n--- Testing Shrubbery ---" << std::endl;
         john.signAForm(shrub);
         shrub.execute(john);
+        john.executeForm(shrub);
         
         std::cout << "\n--- Testing Robotomy ---" << std::endl;
         john.signAForm(robot);
@@ -30,6 +31,8 @@ int main()
         std::cout << "\n--- Testing with low grade ---" << std::endl;
         ShrubberyCreationForm shrub2("garden");
         bob.signAForm(shrub2); // Should fail
+        ShrubberyCreationForm shrub3("/aaa///");
+        john.executeForm(shrub3);
     
         
     }

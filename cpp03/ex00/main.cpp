@@ -3,6 +3,7 @@
 int main() {
     ClapTrap claptrap1("ClapTrap1");
     ClapTrap claptrap2("ClapTrap2");
+    ClapTrap Clap1(claptrap1);
 
     claptrap1.attack("ClapTrap2");
     claptrap2.takeDamage(5);
