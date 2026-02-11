@@ -72,6 +72,7 @@ void AForm::BeSigned(const Bureaucrat& bureaucrat)
     {
         throw AForm::GradeTooLowException();
     }
+    std::cout << "Form " << this->_name << " has been signed by " << bureaucrat.getName() << std::endl;
     this->_Signed = true;
 }
 
