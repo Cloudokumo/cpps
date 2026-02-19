@@ -1,0 +1,22 @@
+#include "Base.hpp"
+#include <cstdlib>
+#include <ctime>
+
+int main()
+{
+    std::srand(std::time(NULL));
+
+    for (int i = 0; i < 10; i++)
+    {
+        Base* obj = generate();
+
+        std::cout << "pointer:   ";
+        identify(obj);
+
+        std::cout << "reference: ";
+        identify(*obj);
+
+        delete obj;
+    }
+    return 0;
+}
