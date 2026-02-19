@@ -67,7 +67,10 @@ void printFloat(double d)
     }
     if (std::isinf(d))
     {
-        std::cout << "float: " << (std::signbit(d) ? "-inff" : "+inff") << std::endl;
+        if (std::signbit(d))
+            std::cout << "float: -inff" << std::endl;
+        else
+            std::cout << "float: +inff" << std::endl;
         return;
     }
     float f = static_cast<float>(d);
@@ -86,7 +89,10 @@ void printDouble(double d)
     }
     if (std::isinf(d))
     {
-        std::cout << "double: " << (std::signbit(d) ? "-inf" : "+inf") << std::endl;
+        if (std::signbit(d))
+            std::cout << "double: -inf" << std::endl;
+        else
+            std::cout << "double: +inf" << std::endl;
         return;
     }
     std::cout << "double: " << d;
@@ -94,8 +100,6 @@ void printDouble(double d)
         std::cout << ".0";
     std::cout << std::endl;
 }
-
-// ─── Print from type ───────────────────────────────────────────────────────────
 
 void printFromChar(char c)
 {
