@@ -16,8 +16,14 @@ int main()
     Data* result = Serializer::deserialize(raw);
     std::cout << "Deserialized pointer: " << result << std::endl;
 
-    std::cout << "Pointers match: " << (&data == result ? "YES" : "NO") << std::endl;
-
+    if (&data == result) 
+    {
+        std::cout << "Pointers match: YES" << std::endl;
+    }   
+     else  
+    {
+        std::cout << "Pointers match: NO" << std::endl;
+    }
     std::cout << "n: " << result->n << std::endl;
     std::cout << "s: " << result->s << std::endl;
     std::cout << "f: " << result->f << std::endl;
