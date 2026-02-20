@@ -29,7 +29,7 @@ int main() {
     try {
         Bureaucrat dave("Dave", 2);
         std::cout << dave << std::endl;
-        dave.incrementGrade();  // 2 -> 1 (better)
+        dave.incrementGrade();
         std::cout << dave << std::endl;
         dave.incrementGrade();  // Should throw exception
     } catch (std::exception& e) {
@@ -40,7 +40,7 @@ int main() {
     try {
         Bureaucrat eve("Eve", 149);
         std::cout << eve << std::endl;
-        eve.decrementGrade();  // 149 -> 150 (worse)
+        eve.decrementGrade();
         std::cout << eve << std::endl;
         eve.decrementGrade();  // Should throw exception
     } catch (std::exception& e) {
