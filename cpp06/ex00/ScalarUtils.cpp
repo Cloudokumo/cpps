@@ -2,6 +2,7 @@
 #include <iostream>
 #include <climits>
 #include <cmath>
+#include <iomanip>
 
 bool isSpecial(const std::string &s)
 {
@@ -15,12 +16,12 @@ bool isChar(const std::string &s)
 
 bool isInt(const std::string &s)
 {
-    int i = 0;
+    size_t i = 0;
+    if (s.length() == 0 || i == s.length())
+        return false;
     if (s[i] == '+' || s[i] == '-')
         i++;
-    if (s.length() == 0 || i == (int)s.length())
-        return false;
-    while (i < (int)s.length()) {
+    while (i < s.length()) {
         if (!std::isdigit(s[i]))
             return false;
         i++;
@@ -30,12 +31,22 @@ bool isInt(const std::string &s)
 
 bool isFloat(const std::string &s)
 {
-    return (s[s.length() - 1] == 'f' && s.find('.') != std::string::npos);
+    
+    if (s[s.length() - 1] == 'f' && s.find('.') != std::string::npos)
+    {
+        if (s.find_first_of('f') == s.find_last_of('f') && s.find_first_of('.') == s.find_last_of('.'))
+            return true;
+    }
+    return false;
 }
 
 bool isDouble(const std::string &s)
 {
-    return (s.find('.') != std::string::npos);
+    if (s.find_first_not_of("0123456789+-.") != std::string::npos)
+        return (false);
+    if (s.find('.') != std::string::npos && (s.find_first_of('.') == s.find_last_of('.')))
+        return (true);
+    return false;
 }
 
 // ─── Print helpers ─────────────────────────────────────────────────────────────
@@ -60,49 +71,27 @@ void printInt(double d)
 
 void printFloat(double d)
 {
-    if (std::isnan(d))
+    if (d > std::numeric_limits<float>::max() || d < -std::numeric_limits<float>::max())
     {
-        std::cout << "float: nanf" << std::endl;
+        std::cout << "float: impossible" << std::endl;
         return;
     }
-    if (std::isinf(d))
-    {
-        if (std::signbit(d))
-            std::cout << "float: -inff" << std::endl;
-        else
-            std::cout << "float: +inff" << std::endl;
-        return;
-    }
-    float f = static_cast<float>(d);
-    std::cout << "float: " << f;
-    if (f == static_cast<float>(static_cast<long long>(f)) && f >= -1e6f && f <= 1e6f)
-        std::cout << ".0";
-    std::cout << "f" << std::endl;
+    std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
 }
 
 void printDouble(double d)
 {
-    if (std::isnan(d))
+    if (std::isinf(d) || std::isnan(d))
     {
-        std::cout << "double: nan" << std::endl;
+        std::cout << "double: impossible" << std::endl;
         return;
     }
-    if (std::isinf(d))
-    {
-        if (std::signbit(d))
-            std::cout << "double: -inf" << std::endl;
-        else
-            std::cout << "double: +inf" << std::endl;
-        return;
-    }
-    std::cout << "double: " << d;
-    if (d == static_cast<double>(static_cast<long long>(d)) && d >= -1e15 && d <= 1e15)
-        std::cout << ".0";
-    std::cout << std::endl;
+    std::cout << "double: " << d << std::endl;
 }
 
 void printFromChar(char c)
 {
+    std::cout << "FROM CHAR" << std::endl;
     double d = static_cast<double>(c);
     printChar(d);
     printInt(d);
@@ -110,18 +99,18 @@ void printFromChar(char c)
     printDouble(d);
 }
 
-void printFromInt(int n)
+void printFromInt(double d)
 {
-    double d = static_cast<double>(n);
+    std::cout << "FROM INT" << std::endl;
     printChar(d);
     printInt(d);
     printFloat(d);
     printDouble(d);
 }
 
-void printFromFloat(float f)
+void printFromFloat(double d)
 {
-    double d = static_cast<double>(f);
+    std::cout << "FROM FLOAT" << std::endl;
     printChar(d);
     printInt(d);
     printFloat(d);
@@ -130,6 +119,7 @@ void printFromFloat(float f)
 
 void printFromDouble(double d)
 {
+    std::cout << "FROM DOUBLE" << std::endl;
     printChar(d);
     printInt(d);
     printFloat(d);

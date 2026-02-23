@@ -1,6 +1,8 @@
 #pragma once
 
 # include <string>
+# include <limits>
+#include <iomanip>
 
 class ScalarConverter 
 {
@@ -23,7 +25,7 @@ void printFloat(double d);
 void printDouble(double d);
 
 void printFromChar(char c);
-void printFromInt(int n);
-void printFromFloat(float f);
+void printFromInt(double d);
+void printFromFloat(double d);
 void printFromDouble(double d);
 void printFromSpecial(const std::string &s);
