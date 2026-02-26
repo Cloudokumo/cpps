@@ -3,6 +3,7 @@
 # include <string>
 # include <limits>
 #include <iomanip>
+#include <cerrno> 
 
 class ScalarConverter 
 {
@@ -25,7 +26,7 @@ void printFloat(double d);
 void printDouble(double d);
 
 void printFromChar(char c);
-void printFromInt(double d);
+void printFromInt(const std::string &s);
 void printFromFloat(double d);
 void printFromDouble(double d);
 void printFromSpecial(const std::string &s);

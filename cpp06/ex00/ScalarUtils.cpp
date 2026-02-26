@@ -49,8 +49,6 @@ bool isDouble(const std::string &s)
     return false;
 }
 
-// ─── Print helpers ─────────────────────────────────────────────────────────────
-
 void printChar(double d)
 {
     if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
@@ -86,7 +84,7 @@ void printDouble(double d)
         std::cout << "double: impossible" << std::endl;
         return;
     }
-    std::cout << "double: " << d << std::endl;
+    std::cout << "double: " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
 void printFromChar(char c)
@@ -99,11 +97,27 @@ void printFromChar(char c)
     printDouble(d);
 }
 
-void printFromInt(double d)
+void printFromInt(const std::string &s)
 {
     std::cout << "FROM INT" << std::endl;
-    printChar(d);
-    printInt(d);
+     long long val;
+    char *end;
+    errno = 0;
+    val = strtoll(s.c_str(), &end, 10);
+    
+    if (val < 0 || val > 127)
+        std::cout << "char: impossible" << std::endl;
+    else if (val < 32 || val == 127)
+        std::cout << "char: Non displayable" << std::endl;
+    else
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
+
+    if (errno == ERANGE || val < INT_MIN || val > INT_MAX)
+        std::cout << "int: impossible" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(val) << std::endl;
+
+    double d = static_cast<double>(val);
     printFloat(d);
     printDouble(d);
 }

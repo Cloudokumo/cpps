@@ -15,8 +15,8 @@ void ScalarConverter::convert(const std::string &literal)
         printFromSpecial(literal);
     else if (isChar(literal))    
         printFromChar(literal[0]);
-    else if (isInt(literal))     
-        printFromInt(atof(literal.c_str()));
+    else if (isInt(literal))
+        printFromInt(literal);
     else if (isFloat(literal))   
         printFromFloat(atof(literal.c_str()));
     else if (isDouble(literal))  
