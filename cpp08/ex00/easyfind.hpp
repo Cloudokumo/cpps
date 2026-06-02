@@ -1,4 +1,6 @@
 #pragma once
+#include <algorithm>
+#include <stdexcept>
 
 template <typename T>
 int easyfind(T &l, int i)

@@ -29,7 +29,7 @@ void Span::addNumber(int i)
     _vec.push_back(i);
 }
 
-long Span::shortestSpan()
+long Span::shortestSpan() const
 {
     if (_vec.size() < 2)
         throw std::runtime_error("Not enough numbers to find a span");
@@ -43,7 +43,7 @@ long Span::shortestSpan()
     return shortest;
 }
 
-long Span::longestSpan()
+long Span::longestSpan() const
 {
     if (_vec.size() < 2)
         throw std::runtime_error("Not enough numbers to find a span");
