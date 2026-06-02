@@ -35,5 +35,10 @@ int main()
     std::cout << sp3.shortestSpan() << std::endl; // 1
     std::cout << sp3.longestSpan() << std::endl;  // 9999
 
+    Span big(2);
+    big.addNumber(-2147483648);
+    big.addNumber(2147483647);
+    std::cout<< big.longestSpan() <<std::endl;
+
     return 0;
 }

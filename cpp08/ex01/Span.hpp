@@ -18,8 +18,8 @@ class Span
 
         void addNumber(int i);
 
-        int shortestSpan();
-        int longestSpan(); 
+        long shortestSpan();
+        long longestSpan(); 
         
         template <typename Iterator>
         void addRange(Iterator begin, Iterator end)

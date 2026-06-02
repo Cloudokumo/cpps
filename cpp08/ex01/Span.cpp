@@ -29,25 +29,25 @@ void Span::addNumber(int i)
     _vec.push_back(i);
 }
 
-int Span::shortestSpan()
+long Span::shortestSpan()
 {
     if (_vec.size() < 2)
         throw std::runtime_error("Not enough numbers to find a span");
     std::vector<int> sorted(_vec);
     std::sort(sorted.begin(), sorted.end());
-    int shortest = sorted[1] - sorted[0];
+    long shortest = (long)sorted[1] - sorted[0];
     for (size_t i = 1; i < sorted.size(); i++)
     {
-        shortest = std::min(shortest, sorted[i] - sorted[i - 1]);
+        shortest = std::min(shortest, (long)sorted[i] - sorted[i - 1]);
     }
     return shortest;
 }
 
-int Span::longestSpan()
+long Span::longestSpan()
 {
     if (_vec.size() < 2)
         throw std::runtime_error("Not enough numbers to find a span");
-    int min = *std::min_element(_vec.begin(), _vec.end());
-    int max = *std::max_element(_vec.begin(), _vec.end());
+    long min = *std::min_element(_vec.begin(), _vec.end());
+    long max = *std::max_element(_vec.begin(), _vec.end());
     return max - min;
 }
