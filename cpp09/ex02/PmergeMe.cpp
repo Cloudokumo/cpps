@@ -63,12 +63,18 @@ size_t PmergeMe::jacobsthal(size_t n)
 
 typedef std::pair<int, int> Pair;
 
+static bool pairFirstLess(const Pair &a, const Pair &b)
+{
+    return a.first < b.first;
+}
+
 static std::vector<Pair> sortPairsVec(std::vector<Pair> v)
 {
     if (v.size() <= 1)
         return v;
 
     std::vector<Pair> big, small;
+    std::vector<int> bound;
     for (size_t i = 0; i + 1 < v.size(); i += 2)
     {
         if (v[i].first >= v[i+1].first)
@@ -81,21 +87,24 @@ static std::vector<Pair> sortPairsVec(std::vector<Pair> v)
             big.push_back(v[i+1]);
             small.push_back(v[i]);
         }
+        bound.push_back(big.back().first);
     }
     bool odd = v.size() % 2;
     Pair straggler;
     if (odd)
         straggler = v.back();
-    else
-        straggler = Pair(0, 0);
 
     big = sortPairsVec(big);
 
     std::vector<Pair> chain(big);
 
     std::vector<Pair> pend(small.begin(), small.end());
+    std::vector<int> pendBound(bound.begin(), bound.end());
     if (odd)
+    {
         pend.push_back(straggler);
+        pendBound.push_back(INT_MAX);
+    }
 
     std::vector<bool> ins(pend.size(), false);
     size_t k = 2;
@@ -115,9 +124,10 @@ static std::vector<Pair> sortPairsVec(std::vector<Pair> v)
             size_t i = idx - 1;
             if (!ins[i])
             {
-                std::vector<Pair>::iterator pos = chain.begin();
-                while (pos != chain.end() && pos->first < pend[i].first)
-                    ++pos;
+                std::vector<Pair>::iterator hiIt =
+                    std::lower_bound(chain.begin(), chain.end(), Pair(pendBound[i], 0), pairFirstLess);
+                std::vector<Pair>::iterator pos =
+                    std::lower_bound(chain.begin(), hiIt, pend[i], pairFirstLess);
                 chain.insert(pos, pend[i]);
                 ins[i] = true;
             }
@@ -128,9 +138,10 @@ static std::vector<Pair> sortPairsVec(std::vector<Pair> v)
     {
         if (!ins[i])
         {
-            std::vector<Pair>::iterator pos = chain.begin();
-            while (pos != chain.end() && pos->first < pend[i].first)
-                ++pos;
+            std::vector<Pair>::iterator hiIt =
+                std::lower_bound(chain.begin(), chain.end(), Pair(pendBound[i], 0), pairFirstLess);
+            std::vector<Pair>::iterator pos =
+                std::lower_bound(chain.begin(), hiIt, pend[i], pairFirstLess);
             chain.insert(pos, pend[i]);
         }
     }
@@ -166,10 +177,17 @@ std::vector<int> PmergeMe::sortVec(std::vector<int> v)
         chain.push_back(pairs[i].first);
 
     std::vector<int> pend;
+    std::vector<int> bound;
     for (size_t i = 1; i < pairs.size(); i++)
+    {
         pend.push_back(pairs[i].second);
+        bound.push_back(pairs[i].first);
+    }
     if (odd)
+    {
         pend.push_back(straggler);
+        bound.push_back(INT_MAX);
+    }
 
     std::vector<bool> ins(pend.size(), false);
     size_t k = 2;
@@ -189,7 +207,11 @@ std::vector<int> PmergeMe::sortVec(std::vector<int> v)
             size_t i = idx - 1;
             if (!ins[i])
             {
-                chain.insert(std::lower_bound(chain.begin(), chain.end(), pend[i]), pend[i]);
+                std::vector<int>::iterator hiIt =
+                    std::lower_bound(chain.begin(), chain.end(), bound[i]);
+                std::vector<int>::iterator pos =
+                    std::lower_bound(chain.begin(), hiIt, pend[i]);
+                chain.insert(pos, pend[i]);
                 ins[i] = true;
             }
         }
@@ -198,12 +220,23 @@ std::vector<int> PmergeMe::sortVec(std::vector<int> v)
     for (size_t i = 0; i < pend.size(); i++)
     {
         if (!ins[i])
-            chain.insert(std::lower_bound(chain.begin(), chain.end(), pend[i]), pend[i]);
+        {
+            std::vector<int>::iterator hiIt =
+                std::lower_bound(chain.begin(), chain.end(), bound[i]);
+            std::vector<int>::iterator pos =
+                std::lower_bound(chain.begin(), hiIt, pend[i]);
+            chain.insert(pos, pend[i]);
+        }
     }
     return chain;
 }
 
 typedef std::pair<int, int> DPair;
+
+static bool dpairFirstLess(const DPair &a, const DPair &b)
+{
+    return a.first < b.first;
+}
 
 static std::deque<DPair> sortPairsDeq(std::deque<DPair> d)
 {
@@ -211,6 +244,7 @@ static std::deque<DPair> sortPairsDeq(std::deque<DPair> d)
         return d;
 
     std::deque<DPair> big, small;
+    std::deque<int> bound;
     for (size_t i = 0; i + 1 < d.size(); i += 2)
     {
         if (d[i].first >= d[i+1].first)
@@ -223,21 +257,24 @@ static std::deque<DPair> sortPairsDeq(std::deque<DPair> d)
             big.push_back(d[i+1]);
             small.push_back(d[i]);
         }
+        bound.push_back(big.back().first);
     }
     bool odd = d.size() % 2;
     DPair straggler;
     if (odd)
         straggler = d.back();
-    else
-        straggler = DPair(0, 0);
 
     big = sortPairsDeq(big);
 
     std::deque<DPair> chain(big);
 
     std::deque<DPair> pend(small.begin(), small.end());
+    std::deque<int> pendBound(bound.begin(), bound.end());
     if (odd)
+    {
         pend.push_back(straggler);
+        pendBound.push_back(INT_MAX);
+    }
 
     std::vector<bool> ins(pend.size(), false);
     size_t k = 2;
@@ -257,9 +294,10 @@ static std::deque<DPair> sortPairsDeq(std::deque<DPair> d)
             size_t i = idx - 1;
             if (!ins[i])
             {
-                std::deque<DPair>::iterator pos = chain.begin();
-                while (pos != chain.end() && pos->first < pend[i].first)
-                    ++pos;
+                std::deque<DPair>::iterator hiIt =
+                    std::lower_bound(chain.begin(), chain.end(), DPair(pendBound[i], 0), dpairFirstLess);
+                std::deque<DPair>::iterator pos =
+                    std::lower_bound(chain.begin(), hiIt, pend[i], dpairFirstLess);
                 chain.insert(pos, pend[i]);
                 ins[i] = true;
             }
@@ -270,9 +308,10 @@ static std::deque<DPair> sortPairsDeq(std::deque<DPair> d)
     {
         if (!ins[i])
         {
-            std::deque<DPair>::iterator pos = chain.begin();
-            while (pos != chain.end() && pos->first < pend[i].first)
-                ++pos;
+            std::deque<DPair>::iterator hiIt =
+                std::lower_bound(chain.begin(), chain.end(), DPair(pendBound[i], 0), dpairFirstLess);
+            std::deque<DPair>::iterator pos =
+                std::lower_bound(chain.begin(), hiIt, pend[i], dpairFirstLess);
             chain.insert(pos, pend[i]);
         }
     }
@@ -308,10 +347,17 @@ std::deque<int> PmergeMe::sortDeq(std::deque<int> d)
         chain.push_back(pairs[i].first);
 
     std::deque<int> pend;
+    std::deque<int> bound;
     for (size_t i = 1; i < pairs.size(); i++)
+    {
         pend.push_back(pairs[i].second);
+        bound.push_back(pairs[i].first);
+    }
     if (odd)
+    {
         pend.push_back(straggler);
+        bound.push_back(INT_MAX);
+    }
 
     std::vector<bool> ins(pend.size(), false);
     size_t k = 2;
@@ -331,7 +377,11 @@ std::deque<int> PmergeMe::sortDeq(std::deque<int> d)
             size_t i = idx - 1;
             if (!ins[i])
             {
-                chain.insert(std::lower_bound(chain.begin(), chain.end(), pend[i]), pend[i]);
+                std::deque<int>::iterator hiIt =
+                    std::lower_bound(chain.begin(), chain.end(), bound[i]);
+                std::deque<int>::iterator pos =
+                    std::lower_bound(chain.begin(), hiIt, pend[i]);
+                chain.insert(pos, pend[i]);
                 ins[i] = true;
             }
         }
@@ -340,7 +390,13 @@ std::deque<int> PmergeMe::sortDeq(std::deque<int> d)
     for (size_t i = 0; i < pend.size(); i++)
     {
         if (!ins[i])
-            chain.insert(std::lower_bound(chain.begin(), chain.end(), pend[i]), pend[i]);
+        {
+            std::deque<int>::iterator hiIt =
+                std::lower_bound(chain.begin(), chain.end(), bound[i]);
+            std::deque<int>::iterator pos =
+                std::lower_bound(chain.begin(), hiIt, pend[i]);
+            chain.insert(pos, pend[i]);
+        }
     }
     return chain;
 }
