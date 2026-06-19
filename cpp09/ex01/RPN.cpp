@@ -59,21 +59,37 @@ bool RPN::applyOperator(char op)
  
 int RPN::evaluate(const std::string &expression)
 {
+    while (!_stack.empty())
+        _stack.pop();
+
+    bool needSpace = false;
+
     for (size_t i = 0; i < expression.size(); i++)
     {
         char c = expression[i];
- 
+
         if (c == ' ')
+        {
+            needSpace = false;
             continue;
- 
+        }
+
+        if (needSpace)
+        {
+            std::cerr << "Error: tokens must be separated by spaces." << std::endl;
+            return 1;
+        }
+
         if (c >= '0' && c <= '9')
         {
             _stack.push(c - '0');
+            needSpace = true;
         }
         else if (isOperator(c))
         {
             if (!applyOperator(c))
                 return 1;
+            needSpace = true;
         }
         else
         {
@@ -81,14 +97,13 @@ int RPN::evaluate(const std::string &expression)
             return 1;
         }
     }
- 
+
     if (_stack.size() != 1)
     {
         std::cerr << "Error: invalid expression." << std::endl;
         return 1;
     }
- 
+
     std::cout << _stack.top() << std::endl;
     return 0;
 }
- 
